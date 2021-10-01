@@ -39,7 +39,7 @@ class EuropeanCall:
 				d1 = np.divide(np.log(S / K) + (risk_free - dividend + 0.5 * sigma ** 2) * T, sigma * np.sqrt(T))
 				d2 = np.divide(np.log(S / K) + (risk_free - dividend - 0.5 * sigma ** 2) * T, sigma * np.sqrt(T))
 			
-			return (S * stats.norm.cdf(d1, 0.0, 1.0) - K * np.exp(-risk_free * T) * stats.norm.cdf(d2, 0.0, 1.0))
+			return (S * np.exp(-dividend * T) * stats.norm.cdf(d1, 0.0, 1.0) - K * np.exp(-risk_free * T) * stats.norm.cdf(d2, 0.0, 1.0))
 					
 	def get_BS_delta(self,S=None, sigma = None,risk_free = None, \
 												dividend = None, K = None, exercise_date = None, calculation_date = None, \
@@ -71,7 +71,7 @@ class EuropeanCall:
 			with np.errstate(divide='ignore'):
 				d1 = np.divide(np.log(S / K) + (risk_free - dividend + 0.5 * sigma ** 2) * T, sigma * np.sqrt(T))
 			
-			return stats.norm.cdf(d1, 0.0, 1.0)
+			return np.exp(-dividend * T) * stats.norm.cdf(d1, 0.0, 1.0)
 			
 	def get_BS_vega(self,S=None, sigma = None,risk_free = None, \
 												dividend = None, K = None, exercise_date = None, calculation_date = None, \
